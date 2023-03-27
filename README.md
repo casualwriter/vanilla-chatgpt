@@ -4,8 +4,9 @@ A minimal ChatGPT client by vanilla javascript, run from local or any static web
 
 For example, 
 
-* https://github.com/casualwriter/vanilla-chatgpt/main/source/index.html
-* https://github.com/casualwriter/vanilla-chatgpt/main/source/vanilla-chatgpt.html
+* https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/index.html
+* https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/vanilla-chatgpt.html
+
 
 ![](vanilla-chatgpt.jpg)
 
