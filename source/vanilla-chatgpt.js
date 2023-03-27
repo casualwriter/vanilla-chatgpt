@@ -65,23 +65,21 @@ chat.stream = function (prompt) {
   
 }
     
-//===== send prompt to chatGPT (not used in this program)
+// send prompt to openai API (not used in vanilla-chatGPT)
 chat.send = function (prompt) {
-  // Set the request data
-  const data = JSON.stringify({
-      model: "gpt-3.5-turbo", 
-      max_tokens: 1000,
-      temperature: 0.2, 
-      messages:   [ { role: "user", content: prompt} ]
-  });
-
-  // Make the API call
-  fetch( chat.endPoint, { method: "POST", headers: chat.headers,  body: data, })
+  
+  chat.body.stream = false 
+  chat.body.messages = [ { role: "user", content: prompt} ]
+  chat.headers = { "Authorization": `Bearer ${chat.apiKey}`, "Content-Type": "application/json" }
+  chat.result = ''
+  chat.controller = new AbortController();
+  const signal = chat.controller.signal
+   
+  fetch( chat.endPoint, { method:'POST', headers: chat.headers, body: JSON.stringify(chat.body), signal } )
   .then(response => response.json() )
   .then(json => {
-     chat.json = json
-     if (json.choices) {
-        chat.result += json.choices[0].message.content + '\n\n'        
+     if ((chat.json = json).choices) {
+        chat.result = json.choices[0].message.content
         chat.onmessage(chat.result)
         chat.oncomplete(chat.result)
      }	 

@@ -269,31 +269,7 @@ chat.stream = function (prompt) {
   } ).catch( error => chat.onerror(error) );
   
 }
-    
-//===== send prompt to chatGPT (not used in this program)
-chat.send = function (prompt) {
-  // Set the request data
-  const data = JSON.stringify({
-      model: "gpt-3.5-turbo", 
-      max_tokens: 1000,
-      temperature: 0.2, 
-      messages:   [ { role: "user", content: prompt} ]
-  });
-
-  // Make the API call
-  fetch( chat.endPoint, { method: "POST", headers: chat.headers,  body: data, })
-  .then(response => response.json() )
-  .then(json => {
-     chat.json = json
-     if (json.choices) {
-        chat.result += json.choices[0].message.content + '\n\n'        
-        chat.onmessage(chat.result)
-        chat.oncomplete(chat.result)
-     }	 
-  })
-  .catch(error => console.error(error));
-}
-
+   
 // default error handle
 chat.onerror = (error) => { alert(error);  };
 
