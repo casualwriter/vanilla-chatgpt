@@ -54,12 +54,13 @@ However, please note that the key can be revealed by html source. Please run it 
 ### How to run and use
 
 Fork [this repo](https://github.com/casualwriter/vanilla-chatgpt), 
-or just click on above link, or download and run locally.
+or just run from [github](https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/index.html), 
+or download and run locally.
 
 1. ``input OPENAI_API_KEY`` when load the page first time. API key will be stored in browser local storage.
-1. ``Prompt Hints`` shows in right-corner, click to select it.
+1. ``Prompt Samples`` shows in right-corner, click to select it.
 1. ``Input prompt`` and click `[Send]` button or press `ctrl-enter`
-1. ``List of prompts`` will show in right corner, click to jump to prompt section.
+1. ``Submitted prompts`` will show in right corner, click to jump to corresponding section.
 1. Press [ctrl-p] to `print conversation`
 1. Click on [clear] button, to `clear conversation history`
 1. Click on **[logout]** button, to `clear OPEN_API_KEY` from local storage.
