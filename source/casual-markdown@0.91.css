@@ -1,0 +1,17 @@
+.markdown code { background:#f0f0f0; color:navy; border-radius:6px; padding:2px; } 
+.markdown pre  { background:#f0f0f0; margin:16px; border:1px solid #ddd; padding:8px; border-radius: 6px;  } 
+.markdown blockquote { background:#f0f0f0; border-left:6px solid grey; padding:8px }
+.markdown table { margin:12px; border-collapse: collapse; }
+.markdown th    { border:1px solid grey; background:lightgrey; padding:6px; } 
+.markdown td    { border:1px solid grey;  padding:6px; }
+.markdown tr:nth-child(even) {  background:#f0f0f0;  }
+.markdown ins { color:#890604 } 
+.markdown rem { color:#198964 }
+.toc ul  { padding: 0 12px; }
+.toc h3  { color:#0057b7; border-bottom:1px dotted  grey }
+.toc .H1 { list-style-type:none; font-weight:600; margin:4px; background:#eee }
+.toc .H2 { list-style-type:none; font-weight:600; margin:4px; }
+.toc .H3 { margin-left:2em }
+.toc .H4 { margin-left:4em }
+.toc .active { color:#0057b7  }
+.toc li:hover { background:#f0f0f0 }
