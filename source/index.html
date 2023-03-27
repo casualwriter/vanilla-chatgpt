@@ -337,9 +337,10 @@ chat.submit = function() {
 window.onload = function () {
   chat.apiKey = localStorage.getItem('OPENAI_API_KEY');
   if (!chat.apiKey || chat.apiKey.length < 10 ) {
-     chat.apiKey = prompt("Please input Secret API key (will store in local.storeage)", "sk-");
+     chat.apiKey = prompt("Please input Secret API key (will store in local.storage)", "sk-");
      localStorage.setItem('OPENAI_API_KEY', chat.apiKey)
   }
+  chat('prompt').focus();
 }
 
 // add submit hot-key of ctrl-enter
@@ -351,6 +352,7 @@ document.addEventListener('keydown', function(event) {
 document.querySelectorAll('#list li').forEach( (element) => {
   element.addEventListener('click', (event) => {
     chat('prompt').innerText = element.innerText
+    chat('prompt').focus();
   });
 });
 </script>
