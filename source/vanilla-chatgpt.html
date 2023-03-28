@@ -36,7 +36,7 @@ header { color:#eee; padding:12px; font-size:20px; height:45px }
   <div id=menu style="float:right;">
     <button onclick="chat.logout()">Logout</button> 
     <button onclick="chat.clear()">Clear</button>
-    <button onclick="chat.export()" disabled>Export</button>
+    <button onclick="chat.export()" >Export</button>
     <button id=btnSent accesskey=s onclick="chat.submit()" title="Ctrl-Enter or Alt-S to send">Send</button>
   </div>
 </header>
@@ -45,10 +45,10 @@ header { color:#eee; padding:12px; font-size:20px; height:45px }
   <div id="left">
     <div id="main" style="padding:8px; max-width:1024px">
        <h3>Welcome to vanilla-chatgpt.</h3> 
-       <p>This is the min. version of vanilla chatGPT (140 lines, using casual-markdown.js and vanilla-chatgpt.js)
+       <p>This is the min. version of vanilla chatGPT (150 lines, using casual-markdown.js and vanilla-chatgpt.js)
        <p>no installation, run from local or any static web hosting. 
        <p>please input your API key to start. input prompt and press <b>[ctrl-enter] to submit</b>, 
-       <p>[ctrl-p] to print conversation, "logout" to clear the API key
+       <p>[ctrl-p] to print, [export] to export conversation, [logout] to clear the API key
     </div>
   </div>
   <div id="right">
@@ -103,6 +103,14 @@ chat.abort = () => {
   chat("receiving").innerHTML += '\n<font color=red>Message Aborted!</font>'
   chat("receiving").id = 'abort';
 };
+
+// clear conversation history
+chat.clear = () => { 
+  if (confirm( 'Clear chat history?')) {
+    chat.history= [] 
+    chat("list").innerHTML = chat("main").innerHTML = ''
+  }
+}  
 
 // submit prompt
 chat.submit = function() {

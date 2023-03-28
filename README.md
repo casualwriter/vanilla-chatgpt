@@ -9,14 +9,43 @@ For example,
 
 ![](vanilla-chatgpt.jpg)
 
+This repository includes 2 version of vanilla-chatGPT, and a js library for chatGPT API.
 
-### Features
+1. [index.html](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/index.html) is the all-in-one version of vanilla-chatGPT. no dependence.
+2. [vanilla-chatgpt.html](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/vanilla-chatgpt.html) is the minimum version using casual-markdown.js and vanilla-chatgpt.js.
+2. [vanilla-chatgpt.js](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/vanilla-chatgpt.js) the js library reusable for your chatGPT client.
 
-* no dependence in vanilla javascript
-* no installation, run from local or web
-* simple with reusable library
-* print friendly for conversation
-* responsive for mobile
+The program is very simple in 360/150 lines of code. You may revise it for further customization.
+
+
+### vanilla-chatgpt.js
+
+`vanilla-chatgpt.js` is the reusable code with the following functions:
+
+* `chat.stream(prompt)` submit prompt in stream mode.
+* `chat.send(prompt)` submit prompt in normal mode.
+* `chat.onmessage(text)` event triggered when message received.
+* `chat.oncomplete(text)` event triggered when message completed.
+* `chat.controller.abort()` to abort fetch() process 
+* `chat.export()` to export conversation to markdown file
+* `chat.history[]` keep the conversation history
+* `chat.apiKey` stored the OPENAI_API_KEY, please assign it before call above functions.
+
+### How to run and use
+
+Fork [this repo](https://github.com/casualwriter/vanilla-chatgpt), 
+or just run from [github](https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/index.html), 
+or download and run locally.
+
+1. ``input OPENAI_API_KEY`` when load the page first time. API key will be stored in browser local storage.
+1. ``Prompt Samples`` shows in right-corner, click to select it.
+1. ``Input prompt`` and click `[Send]` button or press `ctrl-enter`
+1. ``Submitted prompts`` will show in right corner, click to jump to corresponding section.
+1. Press [ctrl-p] to `print conversation`
+1. Click on [export] button, to export conversation to markdown file.
+1. Click on [clear] button, to `clear conversation history`
+1. Click on **[logout]** button, to `clear OPENAI_API_KEY` from local storage.
+
 
 ### OPENAI_API_KEY
 
@@ -51,31 +80,6 @@ window.onload = function () {
 However, please note that the key can be revealed by html source. Please run it from **LOCAL ONLY**
 
 
-### How to run and use
-
-Fork [this repo](https://github.com/casualwriter/vanilla-chatgpt), 
-or just run from [github](https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/index.html), 
-or download and run locally.
-
-1. ``input OPENAI_API_KEY`` when load the page first time. API key will be stored in browser local storage.
-1. ``Prompt Samples`` shows in right-corner, click to select it.
-1. ``Input prompt`` and click `[Send]` button or press `ctrl-enter`
-1. ``Submitted prompts`` will show in right corner, click to jump to corresponding section.
-1. Press [ctrl-p] to `print conversation`
-1. Click on [clear] button, to `clear conversation history`
-1. Click on **[logout]** button, to `clear OPEN_API_KEY` from local storage.
-
-
-### Files
-
-This repository includes 2 version of vanilla-chatGPT, and its javascript libary
-
-1. `index.html` is the all-in-one version of vanilla-chatGPT. no dependence in vanilla javascript.
-2. `vanilla-chatgpt.html` is the minimum version using casual-markdown.js and vanilla-chatgpt.js.
-3. `casual-markdown@0.91.js`  // [casual-markdown parser](https://raw.githack.com/casualwriter/casual-markdown), for chatGPT markdown
-4. `vanilla-chatgpt.js`  //  js library for vanilla-chatgpt, reusable for your chatGPT client.
-
-
 ### Credit
 
 Inspired by the some self-host solutions
@@ -84,4 +88,4 @@ Inspired by the some self-host solutions
 * https://github.com/dirk1983/chatgpt, a simple self-host solution (php)
 
 
-(2023/03/27, v0.50, casualwriter, MIT license)
+(2023/03/28, v0.60)

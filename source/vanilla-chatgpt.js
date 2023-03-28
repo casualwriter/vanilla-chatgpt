@@ -95,10 +95,15 @@ chat.logout = () => {
   if (confirm( 'Logout and clear API Key?')) localStorage.clear();
 }
 
-// clear conversation history
-chat.clear = () => { 
-  if (confirm( 'Clear chat history?')) {
-    chat.history= [] 
-    chat("list").innerHTML = chat("main").innerHTML = ''
-  }
-}  
+// export conversation
+chat.export = (fname) => {
+  const link = document.createElement('a');
+  link.href = 'data:text/plain;charset=utf-8,' 
+  link.download = fname||('chat-'+new Date().toISOString().substr(0,16))+'.md';
+  chat.history.forEach( (x) => { link.href += encodeURIComponent('### '+x.prompt+'\n\n'+x.result) } );  
+  link.click();
+} 
+
+
+
+  
