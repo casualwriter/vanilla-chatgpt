@@ -8,8 +8,8 @@
 body  { font-family:"Segoe UI",Arial; line-height:1.5; font-size:16px; margin:0; padding:0; overflow:hidden }
 header { background: linear-gradient(to bottom right, #06c, #fc0); }
 header { color:#eee; padding:12px; font-size:20px; height:45px }
-#left  { float:left;  width:calc(100vw - 435px); height:calc(100vh - 100px); }
-#right { float:right; width:400px; height:calc(100vh - 100px); } 
+#left  { float:left;  width:calc(100vw - 495px); height:calc(100vh - 100px); }
+#right { float:right; width:460px; height:calc(100vh - 100px); } 
 #left, #prompt, #list { border:1px solid grey; padding:6px; overflow:auto }
 #list li:hover { background:#eee }
 #right textarea { display:block; width:96%; margin:3px auto; background:#eee}
@@ -22,15 +22,15 @@ header { color:#eee; padding:12px; font-size:20px; height:45px }
 }
 @media screen and (max-width: 880px) {
   #list, #message { display:none!important }
-  #right { position:absolute; left:0px; width:97%; top:72px; }
-  #left	 { position:absolute; left:0px; width:97%; top:138px; bottom:6px; height:auto; display:block}
+  #right { width:100%; height:auto;  }
+  #left	 { width:98%; height:calc(100vh - 160px);  }
 }
 </style>
 
 <header>
   <div id=heading style="float:left">Vanilla ChatGPT<br>
     <span id=message style="color:yellow;font-size:10px">
-        version:20230327 <a href="https://github.com/casualwriter/vanilla-chatgpt">github</a>
+        version:20230328 <a href="https://github.com/casualwriter/vanilla-chatgpt">github</a>
     </span>
   </div>
   <div id=menu style="float:right;">
@@ -42,15 +42,6 @@ header { color:#eee; padding:12px; font-size:20px; height:45px }
 </header>
 
 <div id="content" style="margin:8px;">
-  <div id="left">
-    <div id="main" style="padding:8px; max-width:1024px">
-       <h3>Welcome to vanilla-chatgpt.</h3> 
-       <p>This is the min. version of vanilla chatGPT (150 lines, using casual-markdown.js and vanilla-chatgpt.js)
-       <p>no installation, run from local or any static web hosting. 
-       <p>please input your API key to start. input prompt and press <b>[ctrl-enter] to submit</b>, 
-       <p>[ctrl-p] to print, [export] to export conversation, [logout] to clear the API key
-    </div>
-  </div>
   <div id="right">
      <textarea id=prompt rows=3 placeholder="please input prompt here"></textarea>
      <div id="list" style="height:calc(100vh - 163px)">
@@ -62,6 +53,15 @@ header { color:#eee; padding:12px; font-size:20px; height:45px }
           <li>code a function to get string token by javascript
         </ul>
      </div>
+  </div>
+  <div id="left">
+    <div id="main" style="padding:8px; max-width:1024px">
+       <h3>Welcome to vanilla-chatgpt.</h3> 
+       <p>This is the min. version of vanilla chatGPT (150 lines, using casual-markdown.js and vanilla-chatgpt.js)
+       <p>no installation, run from local or any static web hosting. 
+       <p>please input your API key to start. input prompt and press <b>[ctrl-enter] to submit</b>, 
+       <p>[ctrl-p] to print, [export] to export conversation, [logout] to clear the API key
+    </div>
   </div>
 </div>
 

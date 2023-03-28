@@ -7,7 +7,7 @@ For example,
 * https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/index.html
 * https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/vanilla-chatgpt.html
 
-![](vanilla-chatgpt.jpg)
+![](https://github.com/casualwriter/vanilla-chatgpt/blob/main/vanilla-chatgpt.jpg)
 
 This repository includes 2 version of vanilla-chatGPT, and a js library for chatGPT API.
 
@@ -31,7 +31,8 @@ The program is very simple in 360/150 lines of code. You may revise it for furth
 * `chat.history[]` keep the conversation history
 * `chat.apiKey` stored the OPENAI_API_KEY, please assign it before call above functions.
 
-### How to run and use
+
+### How to use
 
 Fork [this repo](https://github.com/casualwriter/vanilla-chatgpt), 
 or just run from [github](https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/index.html), 
@@ -77,7 +78,8 @@ window.onload = function () {
 }  
 ```
 
-However, please note that the key can be revealed by html source. Please run it from **LOCAL ONLY**
+However, please note that the key can be revealed if hard-code in html. 
+Please run it from **LOCAL ONLY** or in private network
 
 
 ### Credit

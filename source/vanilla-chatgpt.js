@@ -99,10 +99,13 @@ chat.logout = () => {
 chat.export = (fname) => {
   const link = document.createElement('a');
   link.href = 'data:text/plain;charset=utf-8,' 
+  chat.history.forEach( (x) => { 
+    link.href += encodeURIComponent('### '+x.prompt+'\n\n'+x.result+'\n\n') 
+  } );  
   link.download = fname||('chat-'+new Date().toISOString().substr(0,16))+'.md';
-  chat.history.forEach( (x) => { link.href += encodeURIComponent('### '+x.prompt+'\n\n'+x.result) } );  
   link.click();
 } 
+
 
 
 
