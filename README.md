@@ -9,16 +9,20 @@ For example, direct run from github source folder
 
 ![](vanilla-chatgpt.jpg)
 
+
 ### Purpose
 
-This project is trying to code a full functional chatGPT client with raw html/css/js in minimal coding effort.
+This project is trying to code a full functional chatGPT client using only raw HTML, CSS, 
+and JavaScript with minimal coding effort. 
 
-it explores the minimum requirement of make use of chatGPT features, without any server, any framework, any additional support. 
+This project aims to explore the minimum requirements of utilizing chatGPT features 
+without the need for a server, framework, or additional resources.
 
-sorry for poor UI. compare official chatGPT, the program only has basic chat functions, 
-but got better printout, and export feature.
+Sorry for poor UI and less features as the official chatGPT, the program aims to provide 
+basic conversation functions with minor enhancements such as printout and export.
 
-### Files
+
+### Source
 
 Source folder includes 2 version of vanilla-chatGPT, and a js library for chatGPT API.
 
