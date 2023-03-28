@@ -89,7 +89,7 @@ chat.oncomplete = (text) => {
      html2 += '<li onclick="location=this.title" title="#prompt' + i + '">' + chat.history[i].prompt
   }
   
-  chat("main").innerHTML = md.html(html1)
+  chat("main").innerHTML = md.html( html1 + '<br><br>' )
   chat("list").innerHTML = html2
   chat("left").scrollTop = chat("left").scrollHeight;
   chat('prompt').value = ''
