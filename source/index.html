@@ -38,7 +38,7 @@ header { color:#eee; padding:12px; font-size:20px; height:45px }
 <header>
   <div id=heading style="float:left">Vanilla ChatGPT<br>
     <span id=message style="color:yellow;font-size:10px">
-        version:20230328 <a href="https://github.com/casualwriter/vanilla-chatgpt" target=_NEW>github</a>
+        <a href="https://github.com/casualwriter/vanilla-chatgpt" target=_NEW>github</a> @20230328a
     </span>
   </div>
   <div id=menu style="float:right;">
@@ -64,11 +64,10 @@ header { color:#eee; padding:12px; font-size:20px; height:45px }
   </div>
   <div id="left">
     <div id="main" style="padding:8px; max-width:1024px">
-       <h3 class=prompt>Welcome to vanilla-chatgpt.</h3> 
-       <p>This is the all-in-one version of vanilla chatGPT. (single file, no dependence)
-       <p>no installation, run from local or any static web hosting. 
+       <h3>Welcome to vanilla-chatgpt.</h3>
        <p>please input your API key to start. input prompt and press <b>[ctrl-enter] to submit</b>, 
-       <p>[ctrl-p] to print, [export] to export conversation, [logout] to clear the API key
+       <p>[ctrl-p] to print, [export] to export conversation 
+       <p>[clear] to clear conversation, [logout] to remove API key
     </div>
   </div>
 </div>
@@ -293,7 +292,7 @@ chat.export = (fname) => {
 // display result when receiving message
 chat.onmessage = function (text) {
   chat("message").innerHTML = 'receiving messages..'
-  chat("receiving").innerHTML = md.html(text);
+  chat("receiving").innerHTML = md.html(text + '<br><br><br>');
 }
 
 // show whole conversation when message completed
@@ -308,7 +307,7 @@ chat.oncomplete = (text) => {
      html2 += '<li onclick="location=this.title" title="#prompt' + i + '">' + chat.history[i].prompt
   }
   
-  chat("main").innerHTML = md.html( html1 + '<br><br>' )
+  chat("main").innerHTML = md.html( html1 + '<br><br><br>' )
   chat("list").innerHTML = html2
   chat("left").scrollTop = chat("left").scrollHeight;
   chat('prompt').value = ''
