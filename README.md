@@ -1,16 +1,22 @@
 # vanilla-chatgpt
 
-A minimal ChatGPT client by vanilla javascript, run from local or any web host
+A minimal ChatGPT client by vanilla javascript, run from local or web.
 
-For example, direct run from github source folder
+For example, the program may direct run from github source folder
 
 * https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/index.html
 * https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/vanilla-chatgpt.html
 
 ![](https://github.com/casualwriter/vanilla-chatgpt/blob/main/vanilla-chatgpt.jpg)
 
+It is a single HTML program intent to be run from local, or private web, or further customization.
 
-This repository includes 2 version of vanilla-chatGPT, and a js library for chatGPT API.
+It also comes with a javascript library of chatGPT API call for front-end coding.
+
+
+### Source Files
+
+This repository includes 2 version of vanilla-chatGPT, and a javascript library for chatGPT API.
 
 1. [index.html](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/index.html) is a single file version of vanilla-chatGPT. no dependence.
 2. [vanilla-chatgpt.html](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/vanilla-chatgpt.html) is the minimum version using casual-markdown.js and vanilla-chatgpt.js.
@@ -19,7 +25,7 @@ This repository includes 2 version of vanilla-chatGPT, and a js library for chat
 The program is very simple in 360/150 lines of code, easy to be revised in your purposes.
 
 
-### vanilla-chatgpt.js
+#### vanilla-chatgpt.js
 
 `vanilla-chatgpt.js` is the reusable code with the following functions:
 
@@ -71,7 +77,7 @@ To remove the API key from local storage, just click on [logout] button.
 
 It is safe to run it from local or web. 
 
-If feel not convenience to input the key every time, you may can hard-code the API key as below
+If feel not convenience to input the key every time, you may hard-code the API key as below
 
 ```
 window.onload = function () {
@@ -80,7 +86,7 @@ window.onload = function () {
 ```
 
 However, please note that the key can be revealed if hard-code in html. 
-Please run it from **LOCAL ONLY** or in private network
+Please run it from **local or private network** in this case.
 
 
 ### Credit
@@ -89,6 +95,7 @@ Inspired by the some self-host solutions
 
 * https://github.com/yuezk/chatgpt-mirror, mirror of ChatGPT (node.js, self-host)
 * https://github.com/dirk1983/chatgpt, a simple self-host solution (php)
+
 
 
 (2023/03/28, v0.60)
