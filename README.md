@@ -2,20 +2,21 @@
 
 A minimal ChatGPT client by vanilla javascript, run from local or any web host
 
-For example, 
+For example, direct run from github source folder
 
 * https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/index.html
 * https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/vanilla-chatgpt.html
 
 ![](https://github.com/casualwriter/vanilla-chatgpt/blob/main/vanilla-chatgpt.jpg)
 
+
 This repository includes 2 version of vanilla-chatGPT, and a js library for chatGPT API.
 
-1. [index.html](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/index.html) is the all-in-one version of vanilla-chatGPT. no dependence.
+1. [index.html](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/index.html) is a single file version of vanilla-chatGPT. no dependence.
 2. [vanilla-chatgpt.html](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/vanilla-chatgpt.html) is the minimum version using casual-markdown.js and vanilla-chatgpt.js.
-2. [vanilla-chatgpt.js](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/vanilla-chatgpt.js) the js library reusable for your chatGPT client.
+3. [vanilla-chatgpt.js](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/vanilla-chatgpt.js) the js library reusable for your chatGPT client.
 
-The program is very simple in 360/150 lines of code. You may revise it for further customization.
+The program is very simple in 360/150 lines of code, easy to be revised in your purposes.
 
 
 ### vanilla-chatgpt.js
@@ -24,8 +25,8 @@ The program is very simple in 360/150 lines of code. You may revise it for furth
 
 * `chat.stream(prompt)` submit prompt in stream mode.
 * `chat.send(prompt)` submit prompt in normal mode.
-* `chat.onmessage(text)` event triggered when message received.
-* `chat.oncomplete(text)` event triggered when message completed.
+* `chat.onmessage(text)` will be triggered when message received.
+* `chat.oncomplete(text)` will be triggered when message completed.
 * `chat.controller.abort()` to abort fetch() process 
 * `chat.export()` to export conversation to markdown file
 * `chat.history[]` keep the conversation history
@@ -38,12 +39,12 @@ Fork [this repo](https://github.com/casualwriter/vanilla-chatgpt),
 or just run from [github](https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/index.html), 
 or download and run locally.
 
-1. ``input OPENAI_API_KEY`` when load the page first time. API key will be stored in browser local storage.
-1. ``Prompt Samples`` shows in right-corner, click to select it.
-1. ``Input prompt`` and click `[Send]` button or press `ctrl-enter`
+1. ``input OPENAI_API_KEY`` when load the page first time. (will be stored in browser local storage)
+1. ``Sample prompts`` shows in right-corner, click to select it.
+1. ``Input prompt`` and click `[Send]` or press `<ctrl-enter>` to submit 
 1. ``Submitted prompts`` will show in right corner, click to jump to corresponding section.
 1. Press [ctrl-p] to `print conversation`
-1. Click on [export] button, to export conversation to markdown file.
+1. Click on [export] button, to `export conversation` to markdown file.
 1. Click on [clear] button, to `clear conversation history`
 1. Click on **[logout]** button, to `clear OPENAI_API_KEY` from local storage.
 
