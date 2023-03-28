@@ -1,6 +1,6 @@
 ﻿/*****************************************************************************
 * vanilla-chatgpt.js - chat library for openai-chatgpt
-* last updated on 2023/03/27, v0.50, basic chat, responsive, print-friendly.
+* last updated on 2023/03/28, v0.60, basic chat, responsive, print-friendly, export.
 *
 * Copyright (c) 2023, Casualwriter (MIT Licensed)
 * https://github.com/casualwriter/vanilla-chatgpt
