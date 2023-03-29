@@ -16,6 +16,8 @@ It is available as a single HTML file, which run directly from local or GitHub s
 
 * https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/index.html
 * https://raw.githack.com/casualwriter/vanilla-chatgpt/main/source/vanilla-chatgpt.html
+* if do not have API key, please check the [demo](https://pingshan-tech.com/demo/ps-chatgpt.html)
+
 
 ![](https://casualwriter.github.io/vanilla-chatgpt/vanilla-chatgpt2.jpg)
 
