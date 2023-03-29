@@ -6,15 +6,16 @@
 </head>
 
 <style>
-body  { font-family:"Segoe UI",Arial; line-height:1.5; font-size:16px; margin:0; padding:0; overflow:hidden }
+body  { font-family: Roboto,Lato,Arial; line-height:1.5; font-size:16px; margin:0; padding:0; overflow:hidden; }
 header { background: linear-gradient(to bottom right, #06c, #fc0); }
-header { color:#eee; padding:12px; font-size:20px; height:45px }
-#left  { float:left;  width:calc(100vw - 495px); height:calc(100vh - 100px); }
-#right { float:right; width:460px; height:calc(100vh - 100px); } 
+header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Open Sans" }
+#left  { float:left;  width:calc(60vw - 30px); height:calc(100vh - 100px); }
+#right { float:right; width:40%; height:calc(100vh - 100px); } 
 #left, #prompt, #list { border:1px solid grey; padding:6px; overflow:auto }
-#list li:hover { background:#eee }
+#list li:hover  { background:#ddd }
+#menu button    { font-family:Lato,arial; border-radius:3px; border:none; padding:3px 6px}
 #right textarea { display:block; width:96%; margin:3px auto; background:#eee}
-.prompt { color:SlateBlue; background:#eee; padding:6px; }
+.prompt { color:#322; background:#ccc; padding:6px; }
 
 .markdown code { background:#f0f0f0; color:navy; border-radius:6px; padding:2px; } 
 .markdown pre  { background:#f0f0f0; margin:16px; border:1px solid #ddd; padding:8px; border-radius: 6px;  } 
@@ -32,43 +33,47 @@ header { color:#eee; padding:12px; font-size:20px; height:45px }
 @media screen and (max-width: 880px) {
   #list, #message { display:none!important }
   #right { width:100%; height:auto;  }
-  #left	 { width:98%; height:calc(100vh - 160px);  }
+  #left	 { width:97%; height:calc(100vh - 160px);  }
 }
 </style>
 
 <header>
   <div id=heading style="float:left">Vanilla ChatGPT<br>
     <span id=message style="color:yellow;font-size:10px">
-        <a href="https://github.com/casualwriter/vanilla-chatgpt" target=_NEW>github</a> @20230328a
+        <a href="https://github.com/casualwriter/vanilla-chatgpt" target=_NEW>github</a> @20230329
     </span>
   </div>
   <div id=menu style="float:right;">
-    <button onclick="chat.logout()">Logout</button> 
-    <button onclick="chat.clear()">Clear</button>
-    <button onclick="chat.export()">Export</button>
-    <button id=btnSent accesskey=s onclick="chat.submit()" title="Ctrl-Enter or Alt-S to send">Send</button>
+    <button onclick="chat.logout()" title="remove API key">Logout</button> 
+    <button onclick="chat.export()" title="export conversation">Export</button>
+    <button onclick="chat.showPrompts()" title="show prompts">Prompts</button>&nbsp;
+    <button id=btnSent accesskey=s onclick="chat.submit()" title="[Alt-S] submit prompt"><b>S</b>end</button>
   </div>
 </header>
 
-<div id="content" style="margin:8px;">
+<div id="content" style="margin:8px;color:#112;background:bed">
   <div id="right">
-     <textarea id=prompt rows=3 placeholder="please input prompt here..<ctrl-enter> to send"></textarea>
+     <textarea id=prompt rows=3 placeholder="please input prompt here.."></textarea>
      <div id="list" style="height:calc(100vh - 163px)">
         <b>Samples of prompt</b>
         <ul>
-          <li>Please translate the following text into ..
-          <li>Please list in table for 10 famous painters
-          <li>please list pro & con of vanilla javascript
-          <li>code a function to get string token by javascript
+          <li>A quote of today
+          <li>A table for 10 famous artists include name, DOB and style
+          <li>Create an article outline in markdown format for "teamwork"
+          <li>Create a dialogue discussing "the meaning of love"
+          <li>Introduce "vanilla chatGPT"
+          <li>Write a short story about "vanilla chatGPT"
+          <li>Discuss about the pros and cons of "vanilla js"
+          <li>Summarize the following content ...
         </ul>
      </div>
   </div>
   <div id="left">
-    <div id="main" style="padding:8px; max-width:1024px">
-       <h3>Welcome to vanilla-chatgpt.</h3>
-       <p>please input your API key to start. input prompt and press <b>[ctrl-enter] to submit</b>, 
-       <p>[ctrl-p] to print, [export] to export conversation 
-       <p>[clear] to clear conversation, [logout] to remove API key
+    <div id="main" style="padding:12px; max-width:960px">
+       <h3>Welcome to vanilla-chatgpt.</h3><p>Please submit prompt by pressing 
+       <label><input type="radio" name="submitkey" onclick="chat.hotkey='enter'" checked>[Enter]</label>
+       <label><input type="radio" name="submitkey" onclick="chat.hotkey='ctrl'">[Ctrl-Enter]</label>
+       <p>[Ctrl-P] to print, [Export] to export conversation [Logout] to remove API key
     </div>
   </div>
 </div>
@@ -269,7 +274,7 @@ chat.stream = function (prompt) {
   } ).catch( error => chat.onerror(error) );
   
 }
-   
+
 // default error handle
 chat.onerror = (error) => { alert(error);  };
 
@@ -293,7 +298,7 @@ chat.export = (fname) => {
 // display result when receiving message
 chat.onmessage = function (text) {
   chat("message").innerHTML = 'receiving messages..'
-  chat("receiving").innerHTML = md.html(text + '<br><br><br>');
+  chat("receiving").innerHTML = md.html(text + '<br><br>');
 }
 
 // show whole conversation when message completed
@@ -303,17 +308,18 @@ chat.oncomplete = (text) => {
   chat.history.push( { prompt: chat.prompt, result: chat.result } )
   
   for (let i=0; i<chat.history.length; i++) {
-     html1 += '<h4 class=prompt id=prompt'+i+'>' + chat.history[i].prompt + '</h4>\n'
-     html1 += chat.history[i].result + '\n\n'
+     html1 += '<h4 class=prompt id=prompt'+i+' ondblclick="chat.clipboard('+i+')" title="doubleclick to copy">' 
+     html1 += chat.history[i].prompt + '</h4>\n' + chat.history[i].result + '\n\n'
      html2 += '<li onclick="location=this.title" title="#prompt' + i + '">' + chat.history[i].prompt
   }
   
-  chat("main").innerHTML = md.html( html1 + '<br><br><br>' )
+  chat("main").innerHTML = md.html( html1 + '<br><br>' )
   chat("list").innerHTML = html2
   chat("left").scrollTop = chat("left").scrollHeight;
-  chat('prompt').value = ''
+  chat('prompt').select()
   chat('prompt').focus();
-  chat("btnSent").innerText = 'Send'
+  chat("btnSent").innerHTML = '<b>S</b>end'
+  
 }
 
 // abort fetch request.
@@ -323,16 +329,9 @@ chat.abort = () => {
   chat("receiving").id = 'abort';
 };
 
-// clear conversation history
-chat.clear = () => { 
-  if (confirm( 'Clear chat history?')) {
-    chat.history= [] 
-    chat("list").innerHTML = chat("main").innerHTML = ''
-  }
-}  
 
 // submit prompt
-chat.submit = function() {
+chat.submit = () => {
   if (chat("btnSent").innerText === 'Stop..') {
     chat.abort()
     chat("btnSent").innerText = 'Send'
@@ -344,26 +343,40 @@ chat.submit = function() {
   }  
 }
 
+// show default prompt list
+chat.showPrompts = () => {
+  chat('list').innerHTML = chat.prompts
+  document.querySelectorAll('#list li').forEach( (element) => {
+    element.addEventListener('click', (event) => {
+      chat('prompt').value = element.innerText
+      chat('prompt').focus();
+    });
+  })
+};
+
+chat.clipboard = (i) => {
+  navigator.clipboard.writeText( '### '+ chat.history[i].prompt + '\n\n' + chat.history[i].result )
+  chat("message").innerText = 'dialogue has been copied to clipboard'
+}
+
 // prompt for API key if not found in localStorage
-window.onload = function () {
+window.onload = () => {
   chat.apiKey = localStorage.getItem('OPENAI_API_KEY');
   if (!chat.apiKey || chat.apiKey.length < 10 ) {
      chat.apiKey = prompt("Please input Secret API key (will store in local.storage)", "sk-");
      localStorage.setItem('OPENAI_API_KEY', chat.apiKey)
   }
+  chat.prompts = chat('list').innerHTML
+  chat.showPrompts()
   chat('prompt').focus();
 }
 
 // add submit hot-key of ctrl-enter
 document.addEventListener('keydown', function(event) {
-  if (event.ctrlKey && event.key === 'Enter') chat.submit()
-});
-
-// handle default prompt list
-document.querySelectorAll('#list li').forEach( (element) => {
-  element.addEventListener('click', (event) => {
-    chat('prompt').innerText = element.innerText
-    chat('prompt').focus();
-  });
+  if ( event.key==='Enter' && (chat.hotkey!='ctrl'||event.ctrlKey)) {
+    if (chat("btnSent").innerText === 'Send') { 
+      event.preventDefault(); chat.submit(); 
+    }
+  }  
 });
 </script>

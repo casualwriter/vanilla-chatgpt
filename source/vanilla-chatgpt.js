@@ -105,8 +105,3 @@ chat.export = (fname) => {
   link.download = fname||('chat-'+new Date().toISOString().substr(0,16))+'.md';
   link.click();
 } 
-
-
-
-
-  
