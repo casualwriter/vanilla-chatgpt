@@ -95,7 +95,10 @@ Inspired by the some self-host solutions
 Special thanks for [jat23606](https://github.com/jay23606),
 he inspired and contributed the code for voice recognition and speak feature.
 
+* https://github.com/jay23606/chat-gpt-voice
+
+
 ### Modification History
 
-* 2023/03/29, v0.65, initial version on 
+* 2023/03/29, v0.65, initial version
 * 2023/04/12, v0.70, add voice recognition and speak, and some minor refinement
