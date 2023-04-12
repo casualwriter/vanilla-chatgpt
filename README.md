@@ -9,8 +9,9 @@ utilizing chatGPT features without the need for a server, framework, or addition
 This program offers basic conversation functions with some enhancements for conversation content
 
 1. refined printout 
-2. double-click to copy content
+2. easy to copy code-block and content
 3. export conversation to markdown
+4. voice recognition and speak answer
 
 It is available as a single HTML file, which run directly from local or GitHub source folder.
 
@@ -91,5 +92,10 @@ Inspired by the some self-host solutions
 * https://github.com/yuezk/chatgpt-mirror, mirror of ChatGPT (node.js, self-host)
 * https://github.com/dirk1983/chatgpt, a simple self-host solution (php)
 
+Special thanks for [jat23606](https://github.com/jay23606),
+he inspired and contributed the code for voice recognition and speak feature.
 
-(v0.65, last updated on 2023/03/29)
+### Modification History
+
+* 2023/03/29, v0.65, initial version on 
+* 2023/04/12, v0.70, add voice recognition and speak, and some minor refinement

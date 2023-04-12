@@ -19,8 +19,6 @@ header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Ope
 
 .markdown code { background:#f0f0f0; color:navy; border-radius:6px; padding:2px; } 
 .markdown pre  { background:#f0f0f0; margin:16px; border:1px solid #ddd; padding:8px; border-radius: 6px;  } 
-.markdown pre:hover button { display:block; }
-.markdown pre button { display:none; float:right; margin:4px }
 .markdown blockquote { background:#f0f0f0; border-left:6px solid grey; padding:8px }
 .markdown table { margin:12px; border-collapse: collapse; }
 .markdown th    { border:1px solid grey; background:lightgrey; padding:6px; } 
@@ -32,13 +30,10 @@ header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Ope
   #left { position:relative; width:100%; left:0px; top:0px; border:none; height:auto; overflow:hidden }
   .prompt { border-bottom: 1px solid grey }
 }
-
 @media screen and (max-width: 880px) {
-  #list, .desktop { display:none!important }
-  #right { position:absolute; width:auto; height:auto; bottom:10px; left:8px; right:70px }
-  #right textarea { height:1.2em; padding:10px; overflow:auto }
-  #btnSend { position:absolute; height:36px; bottom:12px; right:12px; }
-  #left	 { width:97%; height:calc(100vh - 154px);  }
+  #list, #message { display:none!important }
+  #right { width:100%; height:auto;  }
+  #left	 { width:97%; height:calc(100vh - 160px);  }
 }
 </style>
 
@@ -49,11 +44,10 @@ header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Ope
     </span>
   </div>
   <div id=menu style="float:right;">
-    <button onclick="chat.recognition()" title="voice input">🎤</button>
     <button onclick="chat.logout()" title="remove API key">Logout</button> 
     <button onclick="chat.export()" title="export conversation">Export</button>
-    <button class=desktop onclick="chat.showPrompts()" title="show prompts">Prompts</button>&nbsp;
-    <button id=btnSend accesskey=s onclick="chat.submit()" title="[Alt-S] submit prompt"><b>S</b>end</button>
+    <button onclick="chat.showPrompts()" title="show prompts">Prompts</button>&nbsp;
+    <button id=btnSent accesskey=s onclick="chat.submit()" title="[Alt-S] submit prompt"><b>S</b>end</button>
   </div>
 </header>
 
@@ -76,12 +70,10 @@ header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Ope
   </div>
   <div id="left">
     <div id="main" style="padding:12px; max-width:960px">
-       <h3>Welcome to vanilla-chatgpt.</h3>
-       <p class=desktop>Please submit prompt by pressing 
+       <h3>Welcome to vanilla-chatgpt.</h3><p>Please submit prompt by pressing 
        <label><input type="radio" name="submitkey" onclick="chat.hotkey='enter'" checked>[Enter]</label>
        <label><input type="radio" name="submitkey" onclick="chat.hotkey='ctrl'">[Ctrl-Enter]</label>
-       </p>
-       [Ctrl-P] to print <br>[Export] to export conversation <br>[Logout] to remove API key
+       <p>[Ctrl-P] to print, [Export] to export conversation [Logout] to remove API key
     </div>
   </div>
 </div>
@@ -214,17 +206,6 @@ header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Ope
 
     return '<div class="markdown">' + mdHTML + md.after( md.parser( md.before(mdText) ) ) + '</div>'
   }
-  
-  // add copy-button for code-block
-  md.addCopyButton = (str) => {
-    let html = '<button onclick="md.clipboard(this)">copy</button>'
-    return str.replace(/<pre(.*?)\><code>/g, `<pre$1>${html}<code>`)
-  }
-
-  md.clipboard = (e) => {
-    navigator.clipboard.writeText( e.parentNode.innerText.replace('copy\n','') )
-    e.innerText = 'copied'
-  }
 //============= end of casual-markdown-parser===================
 
 /*****************************************************************************
@@ -332,20 +313,13 @@ chat.oncomplete = (text) => {
      html2 += '<li onclick="location=this.title" title="#prompt' + i + '">' + chat.history[i].prompt
   }
   
-  html1 += '<div><button style="float:left" onclick="chat.redo()">Redo</button>'
-  html1 += '<button style="float:right" onclick="chat.speak()">🔊 speak</button>'
-  
-  chat("main").innerHTML = md.addCopyButton(md.html(html1)) + '<br></div>'
+  chat("main").innerHTML = md.html( html1 + '<br><br>' )
   chat("list").innerHTML = html2
   chat("left").scrollTop = chat("left").scrollHeight;
-  chat("btnSend").innerHTML = '<b>S</b>end'
+  chat('prompt').select()
+  chat('prompt').focus();
+  chat("btnSent").innerHTML = '<b>S</b>end'
   
-  if (document.body.clientWidth > 800) {
-    chat('prompt').select()
-    chat('prompt').focus();
-  } else {
-    chat('prompt').value = ''
-  }  
 }
 
 // abort fetch request.
@@ -355,16 +329,17 @@ chat.abort = () => {
   chat("receiving").id = 'abort';
 };
 
+
 // submit prompt
 chat.submit = () => {
-  if (chat("btnSend").innerText === 'Stop..') {
+  if (chat("btnSent").innerText === 'Stop..') {
     chat.abort()
-    chat("btnSend").innerText = 'Send'
+    chat("btnSent").innerText = 'Send'
   } else {
     chat.stream( chat.prompt = chat('prompt').value )
     chat("main").innerHTML += '<h4 class=prompt>' + chat.prompt + '</h4>\n<div id=receiving>Receiving....</div>'
     chat("left").scrollTop = chat("left").scrollHeight;
-    chat("btnSend").innerText = 'Stop..'
+    chat("btnSent").innerText = 'Stop..'
   }  
 }
 
@@ -399,39 +374,9 @@ window.onload = () => {
 // add submit hot-key of ctrl-enter
 document.addEventListener('keydown', function(event) {
   if ( event.key==='Enter' && (chat.hotkey!='ctrl'||event.ctrlKey)) {
-    if (chat("btnSend").innerText === 'Send') { 
+    if (chat("btnSent").innerText === 'Send') { 
       event.preventDefault(); chat.submit(); 
     }
   }  
 });
-
-// [20230412] redo. submit latest prompt
-chat.redo = () => {
-  chat.history.pop()
-  chat('prompt').value = chat.prompt
-  chat.submit()
-}
-
-// speak the latest answer
-chat.speak = (i)  => {
-  if (window.speechSynthesis.speaking) {
-     window.speechSynthesis.cancel();
-  } else {
-    i = ( i>=0? i : chat.history.length-1 )
-    const utterance = new SpeechSynthesisUtterance(chat.history[i].result);
-    utterance.rate = 1.5;
-    window.speechSynthesis.speak(utterance);
-  }
-}
-
-// voice recognition
-var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-chat.speech = new SpeechRecognition();
-
-chat.speech.onresult = e => chat('prompt').value = e.results[0][0].transcript;
-
-chat.recognition = () => {
-  chat.speech.start()
-  chat('prompt').value = 'Listening...'
-}   
 </script>

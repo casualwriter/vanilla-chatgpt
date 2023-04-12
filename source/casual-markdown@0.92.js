@@ -1,7 +1,8 @@
 /*****************************************************************************
  * casual-markdown - a lightweight regexp-base markdown parser with TOC support
- * updated on 2022/07/31, v0.90, refine frontmatter (simple yaml)  
- * last updated on 2023/03/27, v0.91, some refinement for chatgpt markdown
+ * 2022/07/31, v0.90, refine frontmatter (simple yaml)  
+ * 2023/03/27, v0.91, some refinement for chatgpt markdown
+ * last updated on 2023/04/11, v0.92, addCopyButton for code-block
  *
  * Copyright (c) 2022-2023, Casualwriter (MIT Licensed)
  * https://github.com/casualwriter/casual-markdown
@@ -138,6 +139,17 @@
     }
 
     return '<div class="markdown">' + mdHTML + md.after( md.parser( md.before(mdText) ) ) + '</div>'
+  }
+  
+  // add copy-button for code-block
+  md.addCopyButton = (str) => {
+    let html = '<button onclick="md.clipboard(this)">copy</button>'
+    return str.replace(/<pre(.*?)\><code>/g, `<pre$1>${html}<code>`)
+  }
+
+  md.clipboard = (e) => {
+    navigator.clipboard.writeText( e.parentNode.innerText.replace('copy\n','') )
+    e.innerText = 'copied'
   }
 
   //===== TOC support

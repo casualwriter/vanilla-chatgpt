@@ -22,10 +22,13 @@ header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Ope
   #left { position:relative; width:100%; left:0px; top:0px; border:none; height:auto; overflow:hidden }
   .prompt { border-bottom: 1px solid grey }
 }
+
 @media screen and (max-width: 880px) {
-  #list, #message { display:none!important }
-  #right { width:100%; height:auto;  }
-  #left	 { width:97%; height:calc(100vh - 160px);  }
+  #list, .desktop { display:none!important }
+  #right { position:absolute; width:auto; height:auto; bottom:10px; left:8px; right:70px }
+  #right textarea { height:1.2em; padding:10px; overflow:auto }
+  #btnSend { position:absolute; height:36px; bottom:12px; right:12px; }
+  #left	 { width:97%; height:calc(100vh - 154px);  }
 }
 </style>
 
@@ -36,10 +39,11 @@ header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Ope
     </span>
   </div>
   <div id=menu style="float:right;">
+    <button onclick="chat.recognition()" title="voice input">🎤</button>
     <button onclick="chat.logout()" title="remove API key">Logout</button> 
     <button onclick="chat.export()" title="export conversation">Export</button>
-    <button onclick="chat.showPrompts()" title="show prompts">Prompts</button>&nbsp;
-    <button id=btnSent accesskey=s onclick="chat.submit()" title="[Alt-S] submit prompt"><b>S</b>end</button>
+    <button class=desktop onclick="chat.showPrompts()" title="show prompts">Prompts</button>&nbsp;
+    <button id=btnSend accesskey=s onclick="chat.submit()" title="[Alt-S] submit prompt"><b>S</b>end</button>
   </div>
 </header>
 
@@ -62,20 +66,29 @@ header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Ope
   </div>
   <div id="left">
     <div id="main" style="padding:12px; max-width:960px">
-       <h3>Welcome to vanilla-chatgpt.</h3><p>Please submit prompt by pressing 
+       <h3>Welcome to vanilla-chatgpt.</h3>
+       <p class=desktop>Please submit prompt by pressing 
        <label><input type="radio" name="submitkey" onclick="chat.hotkey='enter'" checked>[Enter]</label>
        <label><input type="radio" name="submitkey" onclick="chat.hotkey='ctrl'">[Ctrl-Enter]</label>
-       <p>[Ctrl-P] to print, [Export] to export conversation [Logout] to remove API key
+       </p>
+       [Ctrl-P] to print <br>[Export] to export conversation <br>[Logout] to remove API key
     </div>
   </div>
 </div>
 
-<link rel="stylesheet" href="casual-markdown@0.91.css">
-<script src="casual-markdown@0.91.js"></script>
+<link rel="stylesheet" href="casual-markdown@0.92.css">
+<script src="casual-markdown@0.92.js"></script>
 <script src="vanilla-chatgpt.js"></script>
 
 <script>
-//================= main program ===================
+/*****************************************************************************
+* vanilla-chatgpt.js - chat library for openai-chatgpt
+* 2023/03/28, v0.60, basic chat, responsive, print-friendly, export.
+* 2023/04/12, v0.70, refine UI for mobile, add voice speak and recognition
+*
+* Copyright (c) 2023, Casualwriter (MIT Licensed)
+* https://github.com/casualwriter/vanilla-chatgpt
+*****************************************************************************/
 // display result when receiving message
 chat.onmessage = function (text) {
   chat("message").innerHTML = 'receiving messages..'
@@ -94,13 +107,20 @@ chat.oncomplete = (text) => {
      html2 += '<li onclick="location=this.title" title="#prompt' + i + '">' + chat.history[i].prompt
   }
   
-  chat("main").innerHTML = md.html( html1 + '<br><br>' )
+  html1 += '<div><button style="float:left" onclick="chat.redo()">Redo</button>'
+  html1 += '<button style="float:right" onclick="chat.speak()">🔊 speak</button>'
+  
+  chat("main").innerHTML = md.addCopyButton(md.html(html1)) + '<br></div>'
   chat("list").innerHTML = html2
   chat("left").scrollTop = chat("left").scrollHeight;
-  chat('prompt').select()
-  chat('prompt').focus();
-  chat("btnSent").innerHTML = '<b>S</b>end'
+  chat("btnSend").innerHTML = '<b>S</b>end'
   
+  if (document.body.clientWidth > 800) {
+    chat('prompt').select()
+    chat('prompt').focus();
+  } else {
+    chat('prompt').value = ''
+  }  
 }
 
 // abort fetch request.
@@ -110,17 +130,16 @@ chat.abort = () => {
   chat("receiving").id = 'abort';
 };
 
-
 // submit prompt
 chat.submit = () => {
-  if (chat("btnSent").innerText === 'Stop..') {
+  if (chat("btnSend").innerText === 'Stop..') {
     chat.abort()
-    chat("btnSent").innerText = 'Send'
+    chat("btnSend").innerText = 'Send'
   } else {
     chat.stream( chat.prompt = chat('prompt').value )
     chat("main").innerHTML += '<h4 class=prompt>' + chat.prompt + '</h4>\n<div id=receiving>Receiving....</div>'
     chat("left").scrollTop = chat("left").scrollHeight;
-    chat("btnSent").innerText = 'Stop..'
+    chat("btnSend").innerText = 'Stop..'
   }  
 }
 
@@ -155,9 +174,39 @@ window.onload = () => {
 // add submit hot-key of ctrl-enter
 document.addEventListener('keydown', function(event) {
   if ( event.key==='Enter' && (chat.hotkey!='ctrl'||event.ctrlKey)) {
-    if (chat("btnSent").innerText === 'Send') { 
+    if (chat("btnSend").innerText === 'Send') { 
       event.preventDefault(); chat.submit(); 
     }
   }  
 });
+
+// [20230412] redo. submit latest prompt
+chat.redo = () => {
+  chat.history.pop()
+  chat('prompt').value = chat.prompt
+  chat.submit()
+}
+
+// speak the latest answer
+chat.speak = (i)  => {
+  if (window.speechSynthesis.speaking) {
+     window.speechSynthesis.cancel();
+  } else {
+    i = ( i>=0? i : chat.history.length-1 )
+    const utterance = new SpeechSynthesisUtterance(chat.history[i].result);
+    utterance.rate = 1.5;
+    window.speechSynthesis.speak(utterance);
+  }
+}
+
+// voice recognition
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+chat.speech = new SpeechRecognition();
+
+chat.speech.onresult = e => chat('prompt').value = e.results[0][0].transcript;
+
+chat.recognition = () => {
+  chat.speech.start()
+  chat('prompt').value = 'Listening...'
+}   
 </script>
