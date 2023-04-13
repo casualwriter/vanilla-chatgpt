@@ -1,7 +1,7 @@
 .markdown code { background:#f0f0f0; color:navy; border-radius:6px; padding:2px; } 
-.markdown pre  { background:#f0f0f0; margin:16px; border:1px solid #ddd; padding:8px; border-radius: 6px;  } 
+.markdown pre  { background:#f0f0f0; margin:12px; border:1px solid #ddd; padding:20px 12px; border-radius:6px; } 
 .markdown pre:hover button { display:block; }
-.markdown pre button { display:none; float:right; margin:4px }
+.markdown pre button { display:none; position:relative; float:right; top:-16px }
 .markdown blockquote { background:#f0f0f0; border-left:6px solid grey; padding:8px }
 .markdown table { margin:12px; border-collapse: collapse; }
 .markdown th    { border:1px solid grey; background:lightgrey; padding:6px; } 

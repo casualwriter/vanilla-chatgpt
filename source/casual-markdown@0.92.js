@@ -46,7 +46,7 @@
   }
 
   // copy to clipboard for code-block
-  md.clipboard = (e) => {
+  md.clipboard = function (e) {
     navigator.clipboard.writeText( e.parentNode.innerText.replace('copy\n','') )
     e.innerText = 'copied'
   }
