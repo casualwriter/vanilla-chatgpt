@@ -116,7 +116,7 @@ header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Ope
       block = block.replace(/(\s?)(function|procedure|return|if|then|else|end|loop|while|or|and|case|when)(\s)/gim,'$1<b>$2</b>$3')
       block = block.replace(/(\s?)(var|let|const|for|next|do|while|loop|continue|break|switch|try|catch|finally)(\s)/gim,'$1<b>$2</b>$3')
     }
-    return '<pre title="' + title + '"><code>'  + block + '</code></pre>'
+    return '<pre title="' + title + '"><button onclick="md.clipboard(this)">copy</button><code>'  + block + '</code></pre>'
   }
   
   //===== parse markdown string into HTML string (exclude code-block)
@@ -215,12 +215,6 @@ header { color:#eee; padding:12px; font-size:20px; height:45px; font-family:"Ope
     return '<div class="markdown">' + mdHTML + md.after( md.parser( md.before(mdText) ) ) + '</div>'
   }
   
-  // add copy-button for code-block
-  md.addCopyButton = (str) => {
-    let html = '<button onclick="md.clipboard(this)">copy</button>'
-    return str.replace(/<pre(.*?)\><code>/g, `<pre$1>${html}<code>`)
-  }
-
   md.clipboard = (e) => {
     navigator.clipboard.writeText( e.parentNode.innerText.replace('copy\n','') )
     e.innerText = 'copied'
@@ -335,7 +329,7 @@ chat.oncomplete = (text) => {
   html1 += '<div><button style="float:left" onclick="chat.redo()">Redo</button>'
   html1 += '<button style="float:right" onclick="chat.speak()">🔊 speak</button>'
   
-  chat("main").innerHTML = md.addCopyButton(md.html(html1)) + '<br></div>'
+  chat("main").innerHTML = md.html(html1) + '<br></div>'
   chat("list").innerHTML = html2
   chat("left").scrollTop = chat("left").scrollHeight;
   chat("btnSend").innerHTML = '<b>S</b>end'

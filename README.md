@@ -20,7 +20,7 @@ It is available as a single HTML file, which run directly from local or GitHub s
 * if do not have API key, please check the [demo](https://pingshan-tech.com/demo/ps-chatgpt.html)
 
 
-![](https://casualwriter.github.io/vanilla-chatgpt/vanilla-chatgpt2.jpg)
+![](https://casualwriter.github.io/vanilla-chatgpt/vanilla-chatgpt3.jpg)
 
 
 ### Source
@@ -31,7 +31,7 @@ Source folder includes two version of vanilla-chatGPT with a javascript library 
 2. [vanilla-chatgpt.html](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/vanilla-chatgpt.html) is the minimum version using casual-markdown.js and vanilla-chatgpt.js.
 3. [vanilla-chatgpt.js](https://github.com/casualwriter/vanilla-chatgpt/blob/main/source/vanilla-chatgpt.js) the js library reusable for your chatGPT client.
 
-The program is quite simple in about 380/165 lines of code, making it easy to be revised in your purpose.
+The program is quite simple in about 430/210 lines of code, making it easy to be revised in your purpose.
 
 You can fork [this repo](https://github.com/casualwriter/vanilla-chatgpt) to add your prompt library
 and further customization.
@@ -101,4 +101,4 @@ he inspired and contributed the code for voice recognition and speak feature.
 ### Modification History
 
 * 2023/03/29, v0.65, initial version
-* 2023/04/12, v0.70, add voice recognition and speak, and some minor refinement
+* 2023/04/12, v0.70, add voice recognition and speak, finetune mobile UI, and some minor refinement 

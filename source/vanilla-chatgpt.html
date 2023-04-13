@@ -110,7 +110,7 @@ chat.oncomplete = (text) => {
   html1 += '<div><button style="float:left" onclick="chat.redo()">Redo</button>'
   html1 += '<button style="float:right" onclick="chat.speak()">🔊 speak</button>'
   
-  chat("main").innerHTML = md.addCopyButton(md.html(html1)) + '<br></div>'
+  chat("main").innerHTML = md.html(html1) + '<br></div>'
   chat("list").innerHTML = html2
   chat("left").scrollTop = chat("left").scrollHeight;
   chat("btnSend").innerHTML = '<b>S</b>end'
